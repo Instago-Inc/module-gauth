@@ -1,8 +1,8 @@
 # module/gauth - V8 module
 
-`gauth` is a small helper for connecting to Google APIs in workflows without dragging in heavy dependencies. It keeps OAuth tokens in-memory for the current run, so you can focus on the workflow logic.
+`gauth` helps you connect workflows to Google APIs with minimal setup and consistent behavior. It keeps OAuth tokens in memory for the current run so repeated steps can reuse them without extra wiring.
 
-It is designed for the lightweight V8 runtime used at https://instago.ai and fits cleanly into flow steps and utility modules.
+It is built for the lightweight V8 runtime used at https://instago.ai and is intended to be a small, dependable building block inside your flows.
 
 ## Technical reference
 
@@ -25,7 +25,7 @@ Configuration:
   - `gauth.scope`
   - `gauth.tokenEndpoint`
   - `google.scope`
-- `configure(...)` sets default credentials; passing `scope`/`scopes`/`services` will configure a scoped entry and reset its cached access token.
+- `configure(...)` sets default credentials; if `scope`/`scopes`/`services` are provided, a scoped entry is configured and its cached access token is cleared.
 - Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias `:ro` is mapped to `.readonly`. Use `all` or `*` to expand all known built-in scopes.
 
 Usage:
