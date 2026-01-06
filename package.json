@@ -1,0 +1,17 @@
+{
+  "name": "@instago/gauth",
+  "version": "1.0.1",
+  "description": "Module gauth",
+  "main": "index.js",
+  "type": "commonjs",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "instago",
+    "gauth"
+  ],
+  "files": [
+    "index.js",
+    "ReadMe.MD",
+    "LICENSE"
+  ]
+}

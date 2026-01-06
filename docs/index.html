@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gauth Documentation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 48px 24px;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 28px;
+      }
+      .intro {
+        font-size: 16px;
+        color: #e2e8f0;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #cbd5f5;
+      }
+      ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+      a {
+        color: #93c5fd;
+      }
+      .section {
+        margin-top: 28px;
+      }
+      .muted {
+        color: #94a3b8;
+        font-size: 14px;
+        margin: 6px 0 0;
+      }
+      .code {
+        background: #0b1220;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        padding: 16px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>module/gauth - V8 module</h1>
+      <p class="intro">gauth is a small helper for connecting to Google APIs in workflows without dragging in heavy dependencies. It keeps OAuth tokens in-memory for the current run, so you can focus on the workflow logic.</p>
+      <p class="muted">Learn more at <a href="https://instago.ai" target="_blank" rel="noopener">https://instago.ai</a>.</p>
+      <div class="section">
+        <h2>Technical reference</h2>
+        <h1>module/gauth - V8 module</h1>
+<p><code>gauth</code> is a small helper for connecting to Google APIs in workflows without dragging in heavy dependencies. It keeps OAuth tokens in-memory for the current run, so you can focus on the workflow logic.</p>
+<p>It is designed for the lightweight V8 runtime used at https://instago.ai and fits cleanly into flow steps and utility modules.</p>
+<h2>Technical reference</h2>
+<p>Exports:</p>
+<ul>
+<li><code>configure({ clientId, clientSecret, refreshToken, tokenEndpoint?, scope?, scopes?, services? })</code></li>
+<li><code>setTokens({ accessToken?, refreshToken?, expiresAt?, obtainedAt?, scope?, scopes?, services? })</code></li>
+<li><code>clear({ scope?, scopes?, services? }?)</code></li>
+<li><code>getAccessToken({ scope?, scopes?, services? }?)</code></li>
+<li><code>forceRefresh({ scope?, scopes?, services? }?)</code></li>
+<li><code>authorizationHeader()</code></li>
+<li><code>getToken({ scope?, scopes?, services? }?)</code></li>
+<li><code>auth({ scope?, scopes?, services? }?)</code></li>
+<li><code>toJSON()</code></li>
+</ul>
+<p>Configuration:</p>
+<ul>
+<li>Environment variables (optional):</li>
+<li><code>gauth.clientId</code></li>
+<li><code>gauth.clientSecret</code></li>
+<li><code>gauth.refreshToken</code></li>
+<li><code>gauth.scope</code></li>
+<li><code>gauth.tokenEndpoint</code></li>
+<li><code>google.scope</code></li>
+<li><code>configure(...)</code> sets default credentials; passing <code>scope</code>/<code>scopes</code>/<code>services</code> will configure a scoped entry and reset its cached access token.</li>
+<li>Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias <code>:ro</code> is mapped to <code>.readonly</code>. Use <code>all</code> or <code>*</code> to expand all known built-in scopes.</li>
+</ul>
+<p>Usage:</p>
+<ul>
+<li><code>getAccessToken(...)</code> exchanges the refresh token when needed and resolves to an access token string.</li>
+<li><code>getToken(...)</code> returns <code>{ status, tokens }</code> with <code>access_token</code>, <code>expires_in</code>, <code>obtained_at</code>, and <code>scope</code>.</li>
+<li><code>auth(...)</code> is a convenience wrapper that returns the token string or <code>&#x27;&#x27;</code> on error.</li>
+<li><code>authorizationHeader()</code> resolves to a single header string <code>Authorization: Bearer ...</code>.</li>
+<li><code>clear(...)</code> drops cached access tokens for a scope or all scopes.</li>
+</ul>
+<p>Examples:</p>
+<pre class="code"><code>
+const gauth = require(&#x27;gauth@latest&#x27;);
+
+gauth.configure({
+  clientId: env.GOOGLE_CLIENT_ID,
+  clientSecret: env.GOOGLE_CLIENT_SECRET,
+  refreshToken: env.GOOGLE_REFRESH_TOKEN,
+  scope: &#x27;gmail.readonly&#x27;
+});
+
+const token = await gauth.getAccessToken();
+</code></pre>
+<pre class="code"><code>
+const gauth = require(&#x27;gauth@latest&#x27;);
+
+const res = await gauth.getToken({ services: [&#x27;sheets&#x27;, &#x27;drive.readonly&#x27;] });
+if (res.status === &#x27;ok&#x27;) {
+  const authHeader = await gauth.authorizationHeader();
+  console.log(&#x27;auth ready&#x27;, authHeader);
+}
+</code></pre>
+      </div>
+      
+    </main>
+  </body>
+</html>
