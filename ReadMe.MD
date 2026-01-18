@@ -1,8 +1,8 @@
 # module/gauth - V8 module
 
-`gauth` helps you connect workflows to Google APIs with minimal setup and consistent behavior. It keeps OAuth tokens in memory for the current run so repeated steps can reuse them without extra wiring.
+`gauth` is a small helper for connecting your workflows to Google APIs without a lot of ceremony. It keeps tokens in memory for the current run so repeated steps can reuse them cleanly.
 
-It is built for the lightweight V8 runtime used at https://instago.ai and is intended to be a small, dependable building block inside your flows.
+It is built for the lightweight V8 runtime used at https://instago.ai and is intended to be a dependable building block inside your flows.
 
 ## Technical reference
 
@@ -26,11 +26,11 @@ Configuration:
   - `gauth.tokenEndpoint`
   - `google.scope`
 - `configure(...)` sets default credentials; if `scope`/`scopes`/`services` are provided, a scoped entry is configured and its cached access token is cleared.
-- Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias `:ro` is mapped to `.readonly`. Use `all` or `*` to expand all known built-in scopes.
+- Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias `:ro` is mapped to `.readonly`. Use `all` or `*` to expand all built-in scopes. If no scope is passed, `google.scope` or `gauth.scope` is used.
 
 Usage:
 - `getAccessToken(...)` exchanges the refresh token when needed and resolves to an access token string.
-- `getToken(...)` returns `{ status, tokens }` with `access_token`, `expires_in`, `obtained_at`, and `scope`.
+- `getToken(...)` returns `{ status, tokens }` with `access_token`, `expires_in`, `obtained_at`, and `scope` or `{ status: 'error', error }`.
 - `auth(...)` is a convenience wrapper that returns the token string or `''` on error.
 - `authorizationHeader()` resolves to a single header string `Authorization: Bearer ...`.
 - `clear(...)` drops cached access tokens for a scope or all scopes.

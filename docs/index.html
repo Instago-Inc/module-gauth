@@ -59,13 +59,13 @@
   <body>
     <main>
       <h1>module/gauth - V8 module</h1>
-      <p class="intro">gauth helps you connect workflows to Google APIs with minimal setup and consistent behavior. It keeps OAuth tokens in memory for the current run so repeated steps can reuse them without extra wiring.</p>
+      <p class="intro">gauth is a small helper for connecting your workflows to Google APIs without a lot of ceremony. It keeps tokens in memory for the current run so repeated steps can reuse them cleanly.</p>
       <p class="muted">Learn more at <a href="https://instago.ai" target="_blank" rel="noopener">https://instago.ai</a>.</p>
       <div class="section">
         <h2>Technical reference</h2>
         <h1>module/gauth - V8 module</h1>
-<p><code>gauth</code> helps you connect workflows to Google APIs with minimal setup and consistent behavior. It keeps OAuth tokens in memory for the current run so repeated steps can reuse them without extra wiring.</p>
-<p>It is built for the lightweight V8 runtime used at https://instago.ai and is intended to be a small, dependable building block inside your flows.</p>
+<p><code>gauth</code> is a small helper for connecting your workflows to Google APIs without a lot of ceremony. It keeps tokens in memory for the current run so repeated steps can reuse them cleanly.</p>
+<p>It is built for the lightweight V8 runtime used at https://instago.ai and is intended to be a dependable building block inside your flows.</p>
 <h2>Technical reference</h2>
 <p>Exports:</p>
 <ul>
@@ -89,12 +89,12 @@
 <li><code>gauth.tokenEndpoint</code></li>
 <li><code>google.scope</code></li>
 <li><code>configure(...)</code> sets default credentials; if <code>scope</code>/<code>scopes</code>/<code>services</code> are provided, a scoped entry is configured and its cached access token is cleared.</li>
-<li>Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias <code>:ro</code> is mapped to <code>.readonly</code>. Use <code>all</code> or <code>*</code> to expand all known built-in scopes.</li>
+<li>Scope inputs accept a string (space/comma separated), JSON array string, or array. Alias <code>:ro</code> is mapped to <code>.readonly</code>. Use <code>all</code> or <code>*</code> to expand all built-in scopes. If no scope is passed, <code>google.scope</code> or <code>gauth.scope</code> is used.</li>
 </ul>
 <p>Usage:</p>
 <ul>
 <li><code>getAccessToken(...)</code> exchanges the refresh token when needed and resolves to an access token string.</li>
-<li><code>getToken(...)</code> returns <code>{ status, tokens }</code> with <code>access_token</code>, <code>expires_in</code>, <code>obtained_at</code>, and <code>scope</code>.</li>
+<li><code>getToken(...)</code> returns <code>{ status, tokens }</code> with <code>access_token</code>, <code>expires_in</code>, <code>obtained_at</code>, and <code>scope</code> or <code>{ status: &#x27;error&#x27;, error }</code>.</li>
 <li><code>auth(...)</code> is a convenience wrapper that returns the token string or <code>&#x27;&#x27;</code> on error.</li>
 <li><code>authorizationHeader()</code> resolves to a single header string <code>Authorization: Bearer ...</code>.</li>
 <li><code>clear(...)</code> drops cached access tokens for a scope or all scopes.</li>
@@ -124,7 +124,13 @@ if (res.status === &#x27;ok&#x27;) {
       </div>
       <div class="section">
   <h2>Changelog</h2>
-  <h2>v1.0.1 - Maintenance release metadata</h2>
+  <h2>v1.0.2 - Clearer gauth docs</h2>
+<p>Clarifies <code>gauth</code> messaging across README and docs so workflow authors quickly understand how token caching and configuration behave.</p>
+<h3>Changed</h3>
+<ul>
+<li>Reworded README and documentation sections to highlight consistent behavior, token reuse, and configuration clarity.</li>
+</ul>
+<h2>v1.0.1 - Maintenance release metadata</h2>
 <p>Maintenance release for gauth with release metadata updates and versioning keywords.</p>
 <h3>Changed</h3>
 <ul>

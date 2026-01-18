@@ -3,8 +3,8 @@
 // Depends on http.fetch provided by the host.
 
 (function() {
-  const httpx = require('http@1.0.0');
-  const json = require('json@1.0.0');
+  const httpx = require('http@latest');
+  const json = require('json@latest');
   
   const TOKEN_URL_DEFAULT = 'https://oauth2.googleapis.com/token';
 
